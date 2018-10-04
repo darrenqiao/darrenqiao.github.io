@@ -108,28 +108,27 @@
 
 
 
-  <meta name="description" content="是什么是class文件中特殊格式字节的集合 有什么作用主要用来存放两大类常量：字面量 和 符号引用。由Java 类加载器进行加载。 字面量包括以下几种：  文本字符串8大基本数据类型final修饰的常量  符号引用包含以下几种：  类和接口的全限定名子段的名称和描述符方法的名称和描述符  基本组成是什么常量池的每一个常量都是一个表结构，由以下14个基本表结构组成  八大基本数据类型中 boolea">
-<meta name="keywords" content="JVM,Java">
+  <meta name="description" content="String存在哪里？存在于堆和字符串常量池中  堆是通过new方法创建String对象是所存放的地方 字符串常量池是直接通过双引号定义String 字面量存放的地方，这块区域在Java 7之前存放在永久代中，Java 7之后是存放在堆空间中 Java 7 及以后字符串常量池也是存放在堆中，这种情况下还有什么区别吗？有区别，存放的方式不一样，永久代相对更容易产生OOM错误，而堆空间则有更频繁的垃圾">
+<meta name="keywords" content="Java,面试题">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JVM类文件中的常量池">
-<meta property="og:url" content="http://yoursite.com/2018/09/21/JVM类文件中的常量池/index.html">
+<meta property="og:title" content="关于String的知识点">
+<meta property="og:url" content="http://yoursite.com/2018/10/03/关于String的知识点/index.html">
 <meta property="og:site_name" content="Darren Qiao 的博客">
-<meta property="og:description" content="是什么是class文件中特殊格式字节的集合 有什么作用主要用来存放两大类常量：字面量 和 符号引用。由Java 类加载器进行加载。 字面量包括以下几种：  文本字符串8大基本数据类型final修饰的常量  符号引用包含以下几种：  类和接口的全限定名子段的名称和描述符方法的名称和描述符  基本组成是什么常量池的每一个常量都是一个表结构，由以下14个基本表结构组成  八大基本数据类型中 boolea">
+<meta property="og:description" content="String存在哪里？存在于堆和字符串常量池中  堆是通过new方法创建String对象是所存放的地方 字符串常量池是直接通过双引号定义String 字面量存放的地方，这块区域在Java 7之前存放在永久代中，Java 7之后是存放在堆空间中 Java 7 及以后字符串常量池也是存放在堆中，这种情况下还有什么区别吗？有区别，存放的方式不一样，永久代相对更容易产生OOM错误，而堆空间则有更频繁的垃圾">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images/20180922_01_constant_pool_types.png">
-<meta property="og:image" content="http://yoursite.com/images/20180922_02_decompiled_code.png">
-<meta property="og:updated_time" content="2018-10-04T12:05:00.405Z">
+<meta property="og:image" content="http://yoursite.com/images/2018-10-4-string-constant-pool.png">
+<meta property="og:updated_time" content="2018-10-04T16:12:48.253Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JVM类文件中的常量池">
-<meta name="twitter:description" content="是什么是class文件中特殊格式字节的集合 有什么作用主要用来存放两大类常量：字面量 和 符号引用。由Java 类加载器进行加载。 字面量包括以下几种：  文本字符串8大基本数据类型final修饰的常量  符号引用包含以下几种：  类和接口的全限定名子段的名称和描述符方法的名称和描述符  基本组成是什么常量池的每一个常量都是一个表结构，由以下14个基本表结构组成  八大基本数据类型中 boolea">
-<meta name="twitter:image" content="http://yoursite.com/images/20180922_01_constant_pool_types.png">
+<meta name="twitter:title" content="关于String的知识点">
+<meta name="twitter:description" content="String存在哪里？存在于堆和字符串常量池中  堆是通过new方法创建String对象是所存放的地方 字符串常量池是直接通过双引号定义String 字面量存放的地方，这块区域在Java 7之前存放在永久代中，Java 7之后是存放在堆空间中 Java 7 及以后字符串常量池也是存放在堆中，这种情况下还有什么区别吗？有区别，存放的方式不一样，永久代相对更容易产生OOM错误，而堆空间则有更频繁的垃圾">
+<meta name="twitter:image" content="http://yoursite.com/images/2018-10-4-string-constant-pool.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/09/21/JVM类文件中的常量池/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/10/03/关于String的知识点/"/>
 
 
 
@@ -139,7 +138,7 @@
   };
 </script>
 
-  <title>JVM类文件中的常量池 | Darren Qiao 的博客</title>
+  <title>关于String的知识点 | Darren Qiao 的博客</title>
   
 
 
@@ -312,7 +311,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/21/JVM类文件中的常量池/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/03/关于String的知识点/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Darren Qiao">
@@ -329,7 +328,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">JVM类文件中的常量池
+          <h1 class="post-title" itemprop="name headline">关于String的知识点
               
             
           </h1>
@@ -354,7 +353,7 @@
                 
               
 
-              <time title="创建时间：2018-09-21 14:53:49" itemprop="dateCreated datePublished" datetime="2018-09-21T14:53:49-04:00">2018-09-21</time>
+              <time title="创建时间：2018-10-03 06:32:07" itemprop="dateCreated datePublished" datetime="2018-10-03T06:32:07-04:00">2018-10-03</time>
             
 
             
@@ -371,29 +370,11 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-04 08:05:00" itemprop="dateModified" datetime="2018-10-04T08:05:00-04:00">2018-10-04</time>
+                <time title="修改时间：2018-10-04 12:12:48" itemprop="dateModified" datetime="2018-10-04T12:12:48-04:00">2018-10-04</time>
               
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JVM虚拟机/" itemprop="url" rel="index"><span itemprop="name">JVM虚拟机</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -403,8 +384,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/09/21/JVM类文件中的常量池/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/09/21/JVM类文件中的常量池/" itemprop="commentCount"></span>
+                <a href="/2018/10/03/关于String的知识点/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/03/关于String的知识点/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -412,7 +393,7 @@
 
           
           
-             <span id="/2018/09/21/JVM类文件中的常量池/" class="leancloud_visitors" data-flag-title="JVM类文件中的常量池">
+             <span id="/2018/10/03/关于String的知识点/" class="leancloud_visitors" data-flag-title="关于String的知识点">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -443,81 +424,28 @@
       
 
       
-        <h2 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h2><p>是class文件中特殊格式字节的集合</p>
-<h2 id="有什么作用"><a href="#有什么作用" class="headerlink" title="有什么作用"></a>有什么作用</h2><p>主要用来存放两大类常量：字面量 和 符号引用。由Java 类加载器进行加载。</p>
-<p><strong>字面量</strong>包括以下几种：</p>
-<blockquote>
-<p>文本字符串<br>8大基本数据类型<br>final修饰的常量</p>
+        <h2 id="String存在哪里？"><a href="#String存在哪里？" class="headerlink" title="String存在哪里？"></a>String存在哪里？</h2><p>存在于堆和字符串常量池中</p>
+<ul>
+<li>堆是通过new方法创建String对象是所存放的地方</li>
+<li>字符串常量池是直接通过双引号定义String 字面量存放的地方，这块区域在Java 7之前存放在永久代中，Java 7之后是存放在堆空间中<blockquote>
+<p><strong>Java 7 及以后字符串常量池也是存放在堆中，这种情况下还有什么区别吗？</strong><br><img src="/images/2018-10-4-string-constant-pool.png" alt=""><br>有区别，存放的方式不一样，<br>永久代相对更容易产生OOM错误，而堆空间则有更频繁的垃圾回收机制</p>
 </blockquote>
-<p><strong>符号引用</strong>包含以下几种：</p>
-<blockquote>
-<p>类和接口的全限定名<br>子段的名称和描述符<br>方法的名称和描述符</p>
+</li>
+</ul>
+<h2 id="String长度有什么限制？"><a href="#String长度有什么限制？" class="headerlink" title="String长度有什么限制？"></a>String长度有什么限制？</h2><ul>
+<li>在编译期(字符串常量池)中的长度限制是65534<blockquote>
+<p>作为常量池的一部分，使用<code>CONSTANT_UTF8_info</code>存放,其中的length限制是2字节</p>
 </blockquote>
-<h2 id="基本组成是什么"><a href="#基本组成是什么" class="headerlink" title="基本组成是什么"></a>基本组成是什么</h2><p>常量池的每一个常量都是一个表结构，由以下14个基本表结构组成<br><img src="/images/20180922_01_constant_pool_types.png" alt=""></p>
-<blockquote>
-<p>八大基本数据类型中 boolean, byte, short, int, char 都对应的是 CONSTANT_Integer_info 字段</p>
+</li>
+<li>在运行期长度限制是2G<blockquote>
+<p><code>public int length()</code>返回值是int, int最大值就是2^31 - 1</p>
 </blockquote>
-<p>上面的每一个类型都是一个表结构，至少包含两个字段，比如 CONSTANT_Class_info结构如下：</p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>名称</th>
-<th>数量</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>u1</td>
-<td>tag</td>
-<td>1</td>
-</tr>
-<tr>
-<td>u2</td>
-<td>name_index</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p><code>tag</code> 就是CONSTANT_Class_info对应的标志位7<br><code>name_index</code> 是一个索引值，因为这里需要的是类或者接口的全限定名，所以会指向一个CONSTANT_Utf8_info结构</p>
-</blockquote>
-<h2 id="变量，方法名最长多长，为什么？"><a href="#变量，方法名最长多长，为什么？" class="headerlink" title="变量，方法名最长多长，为什么？"></a>变量，方法名最长多长，为什么？</h2><p>最长65535，即64KB，因为变量，方法名都是在CONSTANT_Utf8_info中存放，该结构有三个字段：  </p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>名称</th>
-<th>数量</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>u1</td>
-<td>tag</td>
-<td>1</td>
-</tr>
-<tr>
-<td>u2</td>
-<td>length</td>
-<td>1</td>
-</tr>
-<tr>
-<td>u1</td>
-<td>bytes</td>
-<td>length</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>lengh表示的是名称的长度，u2表示的是两个字节的无符号整数，最大值为65535.</p>
-</blockquote>
-<h2 id="代码中怎么体现出来"><a href="#代码中怎么体现出来" class="headerlink" title="代码中怎么体现出来"></a>代码中怎么体现出来</h2><p>写一个简单的例子<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * FileName : TestConstantPool.java</span></span><br><span class="line"><span class="comment"> * Created by zongpengq on 9/21/2018.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestConstantPool</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> intData;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">boolean</span> ifData;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">char</span> charData;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        intData = <span class="number">12</span>;</span><br><span class="line">        ifData = <span class="keyword">false</span>;</span><br><span class="line">        charData = <span class="string">'a'</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>用 <code>javac TestConstantPool.java</code> 得到字节码文件 TestConstantPool.class，再通过 <code>javap -v TestConstantPool.class</code> 可以看到代码对应的常量池部分<br><img src="/images/20180922_02_decompiled_code.png" alt=""></p>
-<p>反编译之后发现有这段代码编译之后常量池中放有26个常量类型，简单取其中#1解释一下</p>
-<blockquote>
-<p><code>#1</code> 常量类型是 Methodref表示是一个类方法索引常量，用来描述Object的\<init>方法，由类索引信息#6 和 方法索引信息 #21组成<br><code>#6</code> 是Class类型，指向Obejct类，所以的全限定名又存放到 #26 Utf8类型中<br><code>#21</code> 是NameAndType类型用来描述方法#13 和方法描述符信息#14<br><code>#14</code> 用()V表示函数返回值为void</init></p>
-</blockquote>
+</li>
+</ul>
+<h2 id="String-对象用什么存的"><a href="#String-对象用什么存的" class="headerlink" title="String 对象用什么存的"></a>String 对象用什么存的</h2><ul>
+<li>Java 8 及以前采用char[],UTF-16编码</li>
+<li>Java 9 中采用压缩字符串，根据存储的内容选择用char[] 还是byte[]存放</li>
+</ul>
 
       
     </div>
@@ -538,9 +466,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/JVM/" rel="tag"># JVM</a>
-          
             <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/面试题/" rel="tag"># 面试题</a>
           
         </div>
       
@@ -553,8 +481,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/21/qiao/Java IO - 概述/" rel="next" title="Java IO - 概述">
-                <i class="fa fa-chevron-left"></i> Java IO - 概述
+              <a href="/2018/10/03/一道题目的思考/" rel="next" title="一道题目的思考">
+                <i class="fa fa-chevron-left"></i> 一道题目的思考
               </a>
             
           </div>
@@ -562,10 +490,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/09/27/Java-IO-概述/" rel="prev" title="Java IO - 概述">
-                Java IO - 概述 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -745,7 +669,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#是什么"><span class="nav-number">1.</span> <span class="nav-text">是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有什么作用"><span class="nav-number">2.</span> <span class="nav-text">有什么作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本组成是什么"><span class="nav-number">3.</span> <span class="nav-text">基本组成是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量，方法名最长多长，为什么？"><span class="nav-number">4.</span> <span class="nav-text">变量，方法名最长多长，为什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码中怎么体现出来"><span class="nav-number">5.</span> <span class="nav-text">代码中怎么体现出来</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#String存在哪里？"><span class="nav-number">1.</span> <span class="nav-text">String存在哪里？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#String长度有什么限制？"><span class="nav-number">2.</span> <span class="nav-text">String长度有什么限制？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#String-对象用什么存的"><span class="nav-number">3.</span> <span class="nav-text">String 对象用什么存的</span></a></li></ol></div>
             
 
           </div>
