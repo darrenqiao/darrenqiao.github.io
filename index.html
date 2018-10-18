@@ -261,7 +261,7 @@
         
           
           <li class="menu-item menu-item-sitemap">
-    <a href="/sitemap_location.xml" rel="section">
+    <a href="/sitemap.xml" rel="section">
       <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
   </li>
 
@@ -297,6 +297,197 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.darrenqiao.cn/2018/10/07/Java-Stream-API/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Darren Qiao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Darren Qiao 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/07/Java-Stream-API/" itemprop="url">
+                  Java Stream API
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-07 07:40:49" itemprop="dateCreated datePublished" datetime="2018-10-07T07:40:49-04:00">2018-10-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-10-09 08:13:34" itemprop="dateModified" datetime="2018-10-09T08:13:34-04:00">2018-10-09</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/07/Java-Stream-API/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/07/Java-Stream-API/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/10/07/Java-Stream-API/" class="leancloud_visitors" data-flag-title="Java Stream API">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="有什么作用"><a href="#有什么作用" class="headerlink" title="有什么作用"></a>有什么作用</h2><p>是对集合对象的功能增强，能够更加便利高效的进行聚合，批量数据操作，从Java 8 引入。</p>
+<h2 id="直观理解"><a href="#直观理解" class="headerlink" title="直观理解"></a>直观理解</h2><p>实现一个例子：打印List<string>集合中包含子字符串 “darrenqiao”的元素。<br><strong>不使用Stream API</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (String s : stringList) &#123;</span><br><span class="line">    <span class="keyword">if</span> (s.contains( <span class="string">"darrenqiao"</span> )) &#123;</span><br><span class="line">        System.out.println(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></string></p>
+<p><strong>使用Stream API</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//一行代码搞定</span></span><br><span class="line">stringList.stream()</span><br><span class="line">        .filter( item -&gt; item.contains( <span class="string">"darrenqiao"</span> ) )</span><br><span class="line">        .forEach( System.out::println ) ;</span><br></pre></td></tr></table></figure></p>
+<h2 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h2><p>通过上面的例子可以看出，主要由三个部分组成：Stream, Intermediate, Terminal。</p>
+<blockquote>
+<p><code>Stream部分</code>取得集合对象的数据集。<br><code>Intermediate部分</code>是一系列的中间操作，负责对数据集进行过滤，检索等在处理。<br><code>Terminal部分</code>是最终对经过一系列处理之后的数据进行几种的元素处理。</p>
+</blockquote>
+<h3 id="Stream部分"><a href="#Stream部分" class="headerlink" title="Stream部分"></a>Stream部分</h3><p><strong>什么是Stream</strong><br>是原数据的一种视图，一个序列化的元素集，支持序列化的聚合操作和并行的聚合操作。Stream不保存数据，只是基于原始集合/数组数据生成一个流水线的数据。比如上面的<code>stringList.stream()</code>就是基于原来的List生成一个流水线的数据集，供后续的filter，forEach操作。</p>
+<p><strong>*有什么特点</strong>  </p>
+<ul>
+<li>惰性执行：stream上的操作不会立即执行，只有等到用户真正需要结果(terminal operation)的时候才会执行。把所有中间操作积攒的操作以pipeline的形式执行。</li>
+<li>无存储：基于数据源操作生成的序列</li>
+<li>不会变动原始数据源</li>
+<li></li>
+</ul>
+<h3 id="Intermediate部分"><a href="#Intermediate部分" class="headerlink" title="Intermediate部分"></a>Intermediate部分</h3><p><strong>skip</strong> ：跳过几个元素<br><strong>sorted</strong> ： 排序<br><strong>parallel</strong> ：并发执行<br><strong>sequential</strong> ：序列化执行，和并发执行对应<br><strong>distinct</strong> ： 保证元素集的唯一性。<br><strong>filter</strong> ：通过Lambda表达式进行过滤(上面的例子就是将是含有”darrenqiao”作为过滤条件)<br><strong>map</strong> ： 通过元素类型中的引用函数，将元素做映射，返回仍然是一个值。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//我希望打印符合条件的字符串的长度</span></span><br><span class="line">stringList.stream()</span><br><span class="line">        .filter( item -&gt; item.contains( <span class="string">"darrenqiao"</span> ) )</span><br><span class="line">        .map( String::length )<span class="comment">//在这里调用String类型的length()函数</span></span><br><span class="line">        .forEach( System.out::println ) ;</span><br></pre></td></tr></table></figure></p>
+<p><strong>flatmap</strong> : 相对于map可以返回多个值，并将多个值形成新的流。 简单来说就是把原Stream中所有元素摊平之后组成新的Stream。<br><img src="/images/2018-10-8-flatmap.png" alt=""><br><strong>limit</strong> : 返回限定个数的元素。<br><strong>peek</strong> ： 返回原来的Stream，而外的在每个元素上执行一个操作。(可以用于debug日志打印)<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Stream.of( <span class="string">"one"</span>, <span class="string">"two"</span>, <span class="string">"three"</span>, <span class="string">"four"</span> )</span><br><span class="line">        .filter( e -&gt; e.length() &gt; <span class="number">3</span> )</span><br><span class="line">        .peek( e -&gt; System.out.println( <span class="string">"Filtered value: "</span> + e ) )</span><br><span class="line">        .map( String::toUpperCase )</span><br><span class="line">        .peek( e -&gt; System.out.println( <span class="string">"Mapped value: "</span> + e ) )</span><br><span class="line">        .collect( Collectors.toList() );</span><br></pre></td></tr></table></figure></p>
+<h3 id="Terminal部分"><a href="#Terminal部分" class="headerlink" title="Terminal部分"></a>Terminal部分</h3><p><strong>forEach</strong> : 对流中的每一个元素执行操作。<br><strong>findAny</strong> ：返回任意元素。<br><strong>allMatch</strong> : 判断是否所有元素匹配。<br><strong>anyMatch</strong> : 判断是否有一个元素匹配。<br><strong>collect</strong> : 返回所有元素集合。<br><strong>count</strong> : 返回所有元素个数。<br><strong>findFirst</strong> : 返回所有元素第一个。<br><strong>forEachOrdered</strong> : 按照原有的序列顺序输出。<br><strong>max</strong> : 返回所有元素最大值。<br><strong>min</strong> : 返回所有元素最小值。<br><strong>noneMatch</strong> : 判断是否全部不匹配。<br><strong>reduce</strong> :从一组元素中生成一个值。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//求解最长的一个字符串</span></span><br><span class="line">Stream&lt;String&gt; stream = Stream.of(<span class="string">"I"</span>, <span class="string">"love"</span>, <span class="string">"you"</span>, <span class="string">"too"</span>);</span><br><span class="line">Optional&lt;String&gt; longest = stream.reduce((s1, s2) -&gt; s1.length()&gt;=s2.length() ? s1 : s2);</span><br><span class="line">System.out.println(longest.get());</span><br><span class="line"><span class="comment">//--------------------------------</span></span><br><span class="line"><span class="comment">// 求单词长度之和</span></span><br><span class="line">Stream&lt;String&gt; stream = Stream.of(<span class="string">"I"</span>, <span class="string">"love"</span>, <span class="string">"you"</span>, <span class="string">"too"</span>);</span><br><span class="line">Integer lengthSum = stream.reduce(<span class="number">0</span>,　<span class="comment">// 初始值　// (1)</span></span><br><span class="line">        (sum, str) -&gt; sum+str.length(), <span class="comment">// 累加器 // (2)</span></span><br><span class="line">        (a, b) -&gt; a+b);　<span class="comment">// 部分和拼接器，并行执行时才会用到 // (3)</span></span><br><span class="line"><span class="comment">// int lengthSum = stream.mapToInt(str -&gt; str.length()).sum();</span></span><br><span class="line">System.out.println(lengthSum);</span><br></pre></td></tr></table></figure></p>
+<p><strong>toArray</strong> : 返回数组。   </p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -1581,7 +1772,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
